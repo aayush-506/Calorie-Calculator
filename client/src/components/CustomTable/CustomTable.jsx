@@ -14,13 +14,10 @@ const CustomTable = () => {
   } = useSelector((store) => store.auth)
   const dispatch = useDispatch()
 
+  const items = foodItemsInList || []
+
   return (
-    <Box
-      w="full"
-      h={{ base: '260px', lg: '300px' }}
-      boxShadow="rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px"
-    >
+    <Box w="full" borderRadius="md" borderWidth="1px" borderColor="gray.200" overflow="hidden">
       <TableWrapper>
         <thead>
           <tr>
@@ -30,12 +27,25 @@ const CustomTable = () => {
           </tr>
         </thead>
         <tbody>
-          {foodItemsInList.map(
-            ({ totalEnergy, _id, servings, product: { Description } }, ind) => {
+          {items.length === 0 ? (
+            <tr>
+              <td colSpan={3} style={{ textAlign: 'center', padding: '24px', color: '#718096' }}>
+                No items yet. Click ADD ITEM to log food.
+              </td>
+            </tr>
+          ) : items.map(
+            (item, ind) => {
+              const { totalEnergy, _id, servings, product } = item
+              const Description = product?.Description ?? '—'
               if (loading) {
-                return <div key={ind}>Loading....</div>
-              } else if (error) {
-                return <div key={ind}>Error...</div>
+                return (
+                  <tr key={ind}><td colSpan={3} style={{ textAlign: 'center', padding: '12px' }}>Loading…</td></tr>
+                )
+              }
+              if (error) {
+                return (
+                  <tr key={ind}><td colSpan={3} style={{ textAlign: 'center', padding: '12px', color: '#e53e3e' }}>Error loading items.</td></tr>
+                )
               }
               return (
                 <tr key={ind}>

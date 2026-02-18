@@ -25,7 +25,7 @@ const AfterLoginSideNav = ({ handleVisible }) => {
           fontSize={20}
         />
       </Stack>
-      <Link onClick={() => setIsActive('dairy')} to="/checkCalories">
+      <Link onClick={() => handleVisible()} to="/checkCalories">
         <Box
           className="links"
           id={isActive === 'dairy' ? 'active' : 'notActive'}
@@ -35,37 +35,7 @@ const AfterLoginSideNav = ({ handleVisible }) => {
           Diary
         </Box>
       </Link>
-      <Link onClick={() => setIsActive('trends')} to="/checkCalories/trends">
-        <Box
-          className="links"
-          id={isActive === 'trends' ? 'active' : 'notActive'}
-          fontWeight="500"
-          color="rgb(184,56,5)"
-        >
-          Trands
-        </Box>
-      </Link>
-      <Link onClick={() => setIsActive('foods')} to="#">
-        <Box
-          className="links"
-          id={isActive === 'foods' ? 'active' : 'notActive'}
-          fontWeight="500"
-          color="rgb(184,56,5)"
-        >
-          Foods
-        </Box>
-      </Link>
-      <Link onClick={() => setIsActive('settings')} to="">
-        <Box
-          className="links"
-          id={isActive === 'settings' ? 'active' : 'notActive'}
-          fontWeight="500"
-          color="rgb(184,56,5)"
-        >
-          Settings
-        </Box>
-      </Link>
-      <Link onClick={() => setIsActive('plans')} to="">
+      <Link onClick={() => handleVisible()} to="/checkCalories/plan">
         <Box
           className="links"
           id={isActive === 'plans' ? 'active' : 'notActive'}
@@ -75,7 +45,7 @@ const AfterLoginSideNav = ({ handleVisible }) => {
           Plans
         </Box>
       </Link>
-      <Link onClick={() => setIsActive('help')} to="/checkCalories/help">
+      <Link onClick={() => handleVisible()} to="/checkCalories/help">
         <Box
           className="links"
           id={isActive === 'help' ? 'active' : 'notActive'}

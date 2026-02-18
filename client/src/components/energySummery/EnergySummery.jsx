@@ -20,11 +20,10 @@ const EnergySummery = () => {
   return (
     <Stack
       w="full"
-      h={{ base: 'fit-content', lg: '175px' }}
-      boxShadow="rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px"
-      display={{ base: 'flex', lg: 'grid' }}
-      gridTemplateColumns="1.1fr 1fr"
+      borderRadius="md"
+      borderWidth="1px"
+      borderColor="gray.200"
+      overflow="hidden"
       direction={{ base: 'column', lg: 'row' }}
     >
       <VStack
@@ -35,8 +34,8 @@ const EnergySummery = () => {
         alignItems="center"
         spacing={4}
       >
-        <Text fontSize={14} pl="5px" fontWeight="600" w="full">
-          Energy Summery
+        <Text fontSize="sm" pl="5px" fontWeight="600" w="full">
+          Energy Summary
         </Text>
         <HStack>
           <VStack spacing={0} h="115px">

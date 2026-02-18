@@ -11,11 +11,14 @@ const changeColor = (val) => {
 const CustomSmallTable = ({ title, data }) => {
   return (
     <Box
-      w="361px"
-      h="fit-content"
-      py="5px"
-      boxShadow="rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px"
+      w={{ base: 'full', sm: '320px' }}
+      maxW="361px"
+      flex="1"
+      minW="200px"
+      borderRadius="md"
+      borderWidth="1px"
+      borderColor="gray.200"
+      overflow="hidden"
     >
       <Box
         w="full"

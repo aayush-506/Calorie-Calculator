@@ -5,65 +5,34 @@ import { GiHealthNormal } from 'react-icons/gi'
 import { BiNotepad } from 'react-icons/bi'
 
 const AddFoodItem = ({ toggleVisibility }) => {
+  const buttonProps = {
+    padding: '8px 12px',
+    borderRadius: 'md',
+    fontSize: { base: 'xs', md: 'sm' },
+    fontWeight: 'bold',
+    color: 'gray.600',
+    _hover: { bg: 'gray.100' },
+    borderWidth: '1px',
+    borderColor: 'gray.200',
+    bg: 'white',
+  }
   return (
-    <HStack
-      w={{ base: '100%', md: '770px' }}
-      h="30px"
-      mb="6px"
-      spacing={{ base: 1, md: 4 }}
-    >
-      <HStack
-        _hover={{ cursor: 'pointer', bg: '#fbf2f2', borderRadius: '13px' }}
-        padding="7px"
-        onClick={toggleVisibility}
-      >
-        <Image src="/Images/appleImage.png" w="14px" />
-        <Text
-          fontSize={{ base: 10, md: 14 }}
-          fontWeight="bold"
-          color="gray.600"
-        >
-          ADD ITEM
-        </Text>
+    <HStack w="full" spacing={2} flexWrap="wrap">
+      <HStack {...buttonProps} cursor="pointer" onClick={toggleVisibility} as="button" type="button">
+        <Image src="/Images/appleImage.png" w="14px" alt="" />
+        <Text>ADD ITEM</Text>
       </HStack>
-      <HStack
-        _hover={{ cursor: 'pointer', bg: '#fbf2f2', borderRadius: '13px' }}
-        padding="7px"
-      >
-        <FaWalking color="green" fontSize={16} />
-        <Text
-          fontSize={{ base: 10, md: 14 }}
-          fontWeight="bold"
-          color="gray.600"
-        >
-          ADD EXERCISE
-        </Text>
+      <HStack {...buttonProps} cursor="pointer" as="button" type="button">
+        <FaWalking color="green" fontSize={14} />
+        <Text>ADD EXERCISE</Text>
       </HStack>
-      <HStack
-        _hover={{ cursor: 'pointer', bg: '#fbf2f2', borderRadius: '13px' }}
-        padding="7px"
-      >
-        <GiHealthNormal color="red" fontSize={{ base: 10, md: 14 }} />
-        <Text
-          fontSize={{ base: 10, md: 14 }}
-          fontWeight="bold"
-          color="gray.600"
-        >
-          ADD BIOMETRICS
-        </Text>
+      <HStack {...buttonProps} cursor="pointer" as="button" type="button">
+        <GiHealthNormal color="red" fontSize={14} />
+        <Text>ADD BIOMETRICS</Text>
       </HStack>
-      <HStack
-        _hover={{ cursor: 'pointer', bg: '#fbf2f2', borderRadius: '13px' }}
-        padding="7px"
-      >
-        <BiNotepad color="blue" fontSize={16} />
-        <Text
-          fontSize={{ base: 10, md: 14 }}
-          fontWeight="bold"
-          color="gray.600"
-        >
-          ADD NOTES
-        </Text>
+      <HStack {...buttonProps} cursor="pointer" as="button" type="button">
+        <BiNotepad color="blue" fontSize={14} />
+        <Text>ADD NOTES</Text>
       </HStack>
     </HStack>
   )

@@ -1,4 +1,4 @@
-import { Box, Button, Text } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import React from "react";
 import { useDispatch } from "react-redux";
 
@@ -13,22 +13,18 @@ const LogoutButton = () => {
   };
 
   return (
-    <>
-      {" "}
-      <Box p="1">
-        <Button
-          onClick={handleClick}
-          border="1px solid orange"
-          bg={"white.400"}
-          colorScheme="orange.500"
-          color="orange.300"
-        >
-          <Text  _hover={{ color: "orange" }}>
-            Logout
-          </Text>
-        </Button>
-      </Box>
-    </>
+    <Button
+      onClick={handleClick}
+      size="sm"
+      variant="outline"
+      borderWidth="1px"
+      borderColor="orange.400"
+      color="orange.500"
+      bg="white"
+      _hover={{ bg: 'orange.50', borderColor: 'orange.500' }}
+    >
+      Logout
+    </Button>
   );
 };
 

@@ -28,53 +28,56 @@ const Diarypage = () => {
   const toggleVisibility = () => setIsOpen((prev) => (prev = !prev))
 
   return (
-    <VStack>
+    <VStack w="full" minH="100vh" bg="gray.50" spacing={0} align="stretch">
       <AfterLoginPageNavbar currentLink="dairy" />
       <Stack
         direction={{ base: 'column', lg: 'row' }}
-        w={{ base: '98%', lg: '1100px' }}
-        h={{ base: 'fit-content', lg: '1200px' }}
+        w="full"
+        maxW="1200px"
         margin="auto"
-        mt="20px"
+        p={{ base: 3, lg: 5 }}
+        gap={{ base: 4, lg: 6 }}
         align="flex-start"
+        flex={1}
       >
         <Box
-          w={{ base: '98%', md: '', lg: '430px' }}
-          h={{ base: 'fit-content', lg: '900px' }}
-          overflow="hidden"
+          w={{ base: '100%', lg: '380px' }}
+          flexShrink={0}
+          bg="white"
+          borderRadius="lg"
+          borderWidth="1px"
+          borderColor="gray.200"
+          p={4}
+          boxShadow="sm"
         >
-          <Stack
-            w="full"
-            direction={{ base: 'column', md: 'row', lg: 'column' }}
-          >
+          <Stack spacing={4}>
             <Chart title="Bar Representation" />
             <LineChart title="Line Representation" />
           </Stack>
         </Box>
         <Box
-          w={{ base: '99%', lg: '730px' }}
-          h={{ base: 'fit-content', lg: '1880px' }}
+          flex={1}
+          minW={0}
+          bg="white"
+          borderRadius="lg"
+          borderWidth="1px"
+          borderColor="gray.200"
+          p={4}
+          boxShadow="sm"
           display="flex"
           flexDirection="column"
-          gap="7px"
+          gap={4}
         >
           <AddFoodItem toggleVisibility={toggleVisibility} />
           <CustomTable />
           <CircularProgressDisplayer />
           <EnergySummery />
-          <Stack
-            direction={{ base: 'column', md: 'row' }}
-            justify="space-between"
-          >
-            <VStack>
-              <CustomSmallTable title="Lipid" data={Fat} />
-              <CustomSmallTable title="Major" data={Major} />
-              <CustomSmallTable title="Vitamins" data={vitamins} />
-            </VStack>
-            <VStack>
-              <CustomSmallTable title="Micro" data={micro} />
-              <CustomSmallTable title="Main" data={main} />
-            </VStack>
+          <Stack direction={{ base: 'column', md: 'row' }} gap={4} flexWrap="wrap">
+            <CustomSmallTable title="Lipid" data={Fat} />
+            <CustomSmallTable title="Major" data={Major} />
+            <CustomSmallTable title="Vitamins" data={vitamins} />
+            <CustomSmallTable title="Micro" data={micro} />
+            <CustomSmallTable title="Main" data={main} />
           </Stack>
           {isOpen && <AddItemWindow toggleVisibility={toggleVisibility} />}
         </Box>

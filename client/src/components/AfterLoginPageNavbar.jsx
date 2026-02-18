@@ -17,7 +17,8 @@ const AfterLoginPageNavbar = ({ currentLink }) => {
     <StyledHStack
       w="full"
       h="70px"
-      borderBottom="1px solid #d6d4d4"
+      bg="white"
+      borderBottom="1px solid #e2e8f0"
       px="30px"
       align={{ base: 'center', lg: 'end' }}
       justify={{ base: 'end', lg: 'center' }}
@@ -42,40 +43,6 @@ const AfterLoginPageNavbar = ({ currentLink }) => {
           color="rgb(184,56,5)"
         >
           Diary
-        </Box>
-      </Link>
-      <Link
-        className="navLink"
-        onClick={() => setIsActive('trends')}
-        to=""
-      >
-        <Box
-          className="links"
-          id={isActive === 'trends' ? 'active' : 'notActive'}
-          fontWeight="500"
-          color="rgb(184,56,5)"
-        >
-          Trends
-        </Box>
-      </Link>
-      <Link className="navLink" onClick={() => setIsActive('foods')} to="#">
-        <Box
-          className="links"
-          id={isActive === 'foods' ? 'active' : 'notActive'}
-          fontWeight="500"
-          color="rgb(184,56,5)"
-        >
-          Foods
-        </Box>
-      </Link>
-      <Link className="navLink" onClick={() => setIsActive('settings')} to="">
-        <Box
-          className="links"
-          id={isActive === 'settings' ? 'active' : 'notActive'}
-          fontWeight="500"
-          color="rgb(184,56,5)"
-        >
-          Scan
         </Box>
       </Link>
       <Link
@@ -147,6 +114,7 @@ const StyledHStack = styled(HStack)`
   #active {
     border: 1px solid #d6d4d4;
     border-bottom: 1px solid white;
-    color: #ff0000;
+    color: #e53e3e;
+    font-weight: 600;
   }
 `

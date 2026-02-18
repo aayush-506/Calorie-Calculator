@@ -12,10 +12,13 @@ const initialState = {
 export const diaryReducer = (state = initialState, { type, payload }) => {
     switch (type) {
         case GET_FOOD_PRODUCT_LIST: {
+            const products = Array.isArray(payload?.products) ? payload.products : []
+            const today = `${new Date().getDate()}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`
+            const foodItemsInList = products.filter(ele => ele.time === today)
             return {
                 ...state,
-                foodItemsInList: payload.length > 0 || payload.products?.length > 0 ? payload.products.filter(ele => ele.time === `${new Date().getDate()}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`) : [],
-                usersAlItems: payload.products,
+                foodItemsInList,
+                usersAlItems: products,
             }
         }
         case GET_ALL_PRODUCTS: {

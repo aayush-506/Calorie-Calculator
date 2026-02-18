@@ -10,12 +10,15 @@ const CircularProgressDisplayer = () => {
   return (
     <HStack
       w="full"
-      h={{ base: 'fit-content', lg: '111.2px' }}
-      boxShadow="rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px"
-      px={{ base: 'auto', lg: 5 }}
-      flexWrap={{ base: 'wrap', lg: 'nowrap' }}
+      py={3}
+      px={2}
+      flexWrap="wrap"
       justify="space-evenly"
+      gap={2}
+      borderRadius="md"
+      borderWidth="1px"
+      borderColor="gray.200"
+      bg="gray.50"
     >
       <ProgressCircle value={items.calcium} name="Calcium" />
       <ProgressCircle value={items.iron} name="Iron" />

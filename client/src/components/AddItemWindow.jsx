@@ -20,7 +20,7 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import React, { useEffect, useRef, useState } from 'react'
-import { AiOutlineSearch, AiTwotoneSetting } from 'react-icons/ai'
+import { AiOutlineSearch } from 'react-icons/ai'
 import { MdCloudUpload } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -32,11 +32,12 @@ import DoughnutChart from './chart/DoughnutChart'
 import SearchResultTable from './SearchResultTable/SearchResultTable'
 
 const LABELS = {
+  food_items: 'Food items',
   calories: 'Calories',
   protein_g: 'Protein (g)',
   total_fat_g: 'Total Fat (g)',
   saturated_fat_g: 'Saturated Fat (g)',
-  carbs_g: 'Carbohydrates (g)',
+  carbs_g: 'Carbs (g)',
   fiber_g: 'Fiber (g)',
   sugar_g: 'Sugar (g)',
   sodium_mg: 'Sodium (mg)',
@@ -70,6 +71,7 @@ const AddItemWindow = ({ toggleVisibility }) => {
   const [scanError, setScanError] = useState('')
   const [scanResult, setScanResult] = useState(null)
   const [scanImagePreview, setScanImagePreview] = useState(null)
+  const [activeTab, setActiveTab] = useState(0)
 
   const handleClickProduct = (item) => {
     setProduct(item)
@@ -130,63 +132,48 @@ const AddItemWindow = ({ toggleVisibility }) => {
       top="3%"
       left={{ base: '0', lg: '18%' }}
     >
-      <HStack
-        w="full"
-        px="12px"
-        h="45px"
-        boxShadow=" rgba(69, 69, 69, 0.09) 0px 3px 8px, rgba(66, 65, 65, 0.09) 0px 2px 16px"
-      >
-        <Text fontWeight={600}>Add Food to Diary</Text>
+      <HStack w="full" px={4} py={3} borderBottomWidth="1px" borderColor="gray.200" bg="white">
+        <Text fontWeight={600} color="gray.800">Add Food to Diary</Text>
         <Spacer />
-        <CloseButton onClick={toggleVisibility} />
+        <CloseButton onClick={toggleVisibility} size="sm" />
       </HStack>
-      <HStack
-        w="full"
-        px={{ base: '10px', lg: '20px' }}
-        justifyContent="space-between"
-        py="5px"
-      >
+      {activeTab !== 2 && (
         <HStack
-          w="600px"
-          pl="8px"
-          h="31px"
-          rounded={5}
-          spacing={1}
-          boxShadow="rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px"
+          w="full"
+          px={{ base: 3, lg: 5 }}
+          py={2}
+          justifyContent="space-between"
+          borderBottomWidth="1px"
+          borderColor="gray.100"
         >
-          <AiOutlineSearch />
-          <FormControl>
-            <Input
-              value={query}
-              onChange={({ target: { value } }) => setQuery(value)}
-              h="31px"
-              outline="none"
-              border="none"
-              variant="unstyled"
-            />
-          </FormControl>
-        </HStack>
-        <Button
-          onClick={() => dispatch(getAllProductToDisplay(query))}
-          variant="outline"
-          outline="1px solid #e49e60ff"
-          h="35px"
-        >
-          Search
-        </Button>
-        <AiTwotoneSetting color="grey" fontSize={19} />
-      </HStack>
-      <HStack w="full" px={{ base: '10px', lg: '20px' }}>
-        <Tabs variant="enclosed" w="full">
-          <TabList
-            boxShadow="rgba(138, 138, 138, 0.24) 0px -3px 4px"
-            pt="10px"
-            pl="5px"
-            h="40px"
+          <HStack flex={1} maxW="400px" px={2} py={1} rounded="md" borderWidth="1px" borderColor="gray.200" bg="gray.50">
+            <AiOutlineSearch color="gray.500" />
+            <FormControl>
+              <Input
+                value={query}
+                onChange={({ target: { value } }) => setQuery(value)}
+                size="sm"
+                placeholder="Search food..."
+                variant="unstyled"
+              />
+            </FormControl>
+          </HStack>
+          <Button
+            size="sm"
+            onClick={() => dispatch(getAllProductToDisplay(query))}
+            colorScheme="orange"
+            variant="outline"
           >
-            <Tab>All</Tab>
-            <Tab>Categories</Tab>
-            <Tab>Scan</Tab>
+            Search
+          </Button>
+        </HStack>
+      )}
+      <HStack w="full" px={{ base: 3, lg: 5 }} align="stretch">
+        <Tabs variant="enclosed" w="full" index={activeTab} onChange={setActiveTab}>
+          <TabList borderBottom="none" gap={1}>
+            <Tab _selected={{ borderColor: 'orange.400', borderBottomColor: 'white', mb: '-1px' }}>All</Tab>
+            <Tab _selected={{ borderColor: 'orange.400', borderBottomColor: 'white', mb: '-1px' }}>Categories</Tab>
+            <Tab _selected={{ borderColor: 'orange.400', borderBottomColor: 'white', mb: '-1px' }}>Scan</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
@@ -237,21 +224,25 @@ const AddItemWindow = ({ toggleVisibility }) => {
               </Stack>
             </TabPanel>
             <TabPanel>
-              <SearchResultTable />
+              <SearchResultTable
+                allFoodItems={allFoodItems}
+                handleClickProduct={handleClickProduct}
+              />
             </TabPanel>
             <TabPanel>
               <VStack align="stretch" spacing={4} py={2}>
                 <Box
                   as="label"
-                  cursor="pointer"
+                  cursor={scanLoading ? 'wait' : 'pointer'}
                   borderWidth={2}
                   borderStyle="dashed"
-                  borderColor="gray.300"
-                  borderRadius="md"
-                  p={6}
+                  borderColor="gray.200"
+                  borderRadius="lg"
+                  p={8}
                   textAlign="center"
-                  _hover={{ borderColor: 'orange.400', bg: 'gray.50' }}
-                  opacity={scanLoading ? 0.7 : 1}
+                  _hover={!scanLoading ? { borderColor: 'orange.300', bg: 'orange.50' } : {}}
+                  opacity={scanLoading ? 0.8 : 1}
+                  transition="all 0.2s"
                 >
                   <Input
                     ref={fileInputRef}
@@ -261,59 +252,56 @@ const AddItemWindow = ({ toggleVisibility }) => {
                     onChange={handleScanSubmit}
                     disabled={scanLoading}
                   />
-                  <MdCloudUpload size={32} style={{ margin: '0 auto 8px', display: 'block', color: '#c4a574' }} />
-                  <Text fontWeight={600} color="gray.600">
-                    {scanLoading ? 'Analyzing image…' : 'Upload nutrition label or food image'}
+                  <MdCloudUpload size={28} style={{ margin: '0 auto 8px', display: 'block', color: '#dd6b20' }} />
+                  <Text fontWeight={600} color="gray.700">
+                    {scanLoading ? 'Analyzing…' : 'Upload photo of your food or nutrition label'}
                   </Text>
-                  <Text fontSize="sm" color="gray.500" mt={1}>
-                    JPEG, PNG, WebP or GIF (max 5 MB)
+                  <Text fontSize="xs" color="gray.500" mt={1}>
+                    JPEG, PNG, WebP, GIF · max 5 MB
                   </Text>
                 </Box>
                 {scanError && (
-                  <Box>
-                    <Text color="red.500" fontSize="sm">
-                      {scanError}
-                    </Text>
+                  <Box px={1}>
+                    <Text color="red.600" fontSize="sm">{scanError}</Text>
                     {scanError.toLowerCase().includes('no nutrition facts found') && (
-                      <Text color="gray.500" fontSize="xs" mt={2}>
-                        Tip: Use a clear photo of a nutrition label (package or bottle), or a photo of your meal—the app will try to identify the food and estimate nutrition.
-                      </Text>
+                      <Text color="gray.500" fontSize="xs" mt={1}>Try a clearer photo of the meal or the product label.</Text>
                     )}
                   </Box>
                 )}
-                {scanImagePreview && (
+                {(scanImagePreview || (scanResult && Object.keys(scanResult).length > 0)) && (
                   <Flex
                     direction={{ base: 'column', md: 'row' }}
                     gap={4}
                     w="full"
                     align={{ base: 'center', md: 'flex-start' }}
                   >
-                    <Box flexShrink={0}>
-                      <Image
-                        src={scanImagePreview}
-                        alt="Uploaded food"
-                        maxH="220px"
-                        maxW="280px"
-                        objectFit="cover"
-                        borderRadius="md"
-                        borderWidth={1}
-                        borderColor="gray.200"
-                        shadow="sm"
-                      />
-                    </Box>
+                    {scanImagePreview && (
+                      <Box flexShrink={0}>
+                        <Image
+                          src={scanImagePreview}
+                          alt="Your food"
+                          maxH="200px"
+                          maxW="260px"
+                          objectFit="cover"
+                          borderRadius="lg"
+                          borderWidth="1px"
+                          borderColor="gray.200"
+                        />
+                      </Box>
+                    )}
                     {scanResult && Object.keys(scanResult).length > 0 && (
                       <Box
                         flex={1}
-                        borderWidth={1}
-                        borderColor="gray.200"
-                        borderRadius="md"
+                        borderRadius="lg"
                         p={4}
                         bg="gray.50"
                         w="full"
                         minW={0}
+                        borderWidth="1px"
+                        borderColor="gray.100"
                       >
-                        <Text fontWeight={700} mb={3} color="gray.700">
-                          Extracted nutrition facts
+                        <Text fontWeight={600} mb={3} color="gray.800" fontSize="sm">
+                          Nutrition
                         </Text>
                         <SimpleGrid columns={{ base: 1, sm: 2 }} spacing={2}>
                           {Object.entries(scanResult).map(([key, value]) => {
@@ -324,13 +312,9 @@ const AddItemWindow = ({ toggleVisibility }) => {
                                 ? (Number.isInteger(value) ? value : value.toFixed(1))
                                 : String(value)
                             return (
-                              <HStack key={key} justify="space-between" bg="white" px={3} py={2} borderRadius="md" borderWidth={1} borderColor="gray.100">
-                                <Text fontSize="sm" color="gray.600">
-                                  {formatKey(key)}
-                                </Text>
-                                <Text fontSize="sm" fontWeight={600}>
-                                  {displayValue}
-                                </Text>
+                              <HStack key={key} justify="space-between" bg="white" px={3} py={2} borderRadius="md" borderWidth="1px" borderColor="gray.100">
+                                <Text fontSize="sm" color="gray.600">{formatKey(key)}</Text>
+                                <Text fontSize="sm" fontWeight={600} color="gray.800">{displayValue}</Text>
                               </HStack>
                             )
                           })}
@@ -338,40 +322,6 @@ const AddItemWindow = ({ toggleVisibility }) => {
                       </Box>
                     )}
                   </Flex>
-                )}
-                {scanResult && Object.keys(scanResult).length > 0 && !scanImagePreview && (
-                  <Box
-                    borderWidth={1}
-                    borderColor="gray.200"
-                    borderRadius="md"
-                    p={4}
-                    bg="gray.50"
-                    w="full"
-                  >
-                    <Text fontWeight={700} mb={3} color="gray.700">
-                      Extracted nutrition facts
-                    </Text>
-                    <SimpleGrid columns={{ base: 1, sm: 2 }} spacing={2}>
-                      {Object.entries(scanResult).map(([key, value]) => {
-                        if (value == null || value === '' || key === 'error') return null
-                        const displayValue = Array.isArray(value)
-                          ? value.join(', ')
-                          : typeof value === 'number'
-                            ? (Number.isInteger(value) ? value : value.toFixed(1))
-                            : String(value)
-                        return (
-                          <HStack key={key} justify="space-between" bg="white" px={3} py={2} borderRadius="md" borderWidth={1} borderColor="gray.100">
-                            <Text fontSize="sm" color="gray.600">
-                              {formatKey(key)}
-                            </Text>
-                            <Text fontSize="sm" fontWeight={600}>
-                              {displayValue}
-                            </Text>
-                          </HStack>
-                        )
-                      })}
-                    </SimpleGrid>
-                  </Box>
                 )}
               </VStack>
             </TabPanel>
