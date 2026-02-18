@@ -47,6 +47,20 @@ const AfterLoginPageNavbar = ({ currentLink }) => {
       </Link>
       <Link
         className="navLink"
+        onClick={() => setIsActive('scan')}
+        to="/checkCalories/scan"
+      >
+        <Box
+          className="links"
+          id={isActive === 'scan' ? 'active' : 'notActive'}
+          fontWeight="500"
+          color="rgb(184,56,5)"
+        >
+          Scan
+        </Box>
+      </Link>
+      <Link
+        className="navLink"
         onClick={() => setIsActive('plans')}
         to="/checkCalories/plan"
       >

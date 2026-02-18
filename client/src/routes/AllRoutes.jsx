@@ -18,6 +18,7 @@ import Web from '../pages/Web'
 import Mobile from '../pages/Mobile'
 import Help from '../pages/Help'
 import Plan from '../pages/plan'
+import ScanPage from '../pages/ScanPage'
 import AuthRoute from './AuthRoute'
 
 const AllRoutes = () => {
@@ -59,7 +60,14 @@ const AllRoutes = () => {
         }
       />
       <Route path="/checkCalories/plan" element={<Plan />} />
-      {/* All Routes of AfterLogin page will come under this route so add them here */}
+      <Route
+        path="/checkCalories/scan"
+        element={
+          <AuthRoute>
+            <ScanPage />
+          </AuthRoute>
+        }
+      />
     </Routes>
   )
 }

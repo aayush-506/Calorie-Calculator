@@ -26,32 +26,22 @@ const AfterLoginSideNav = ({ handleVisible }) => {
         />
       </Stack>
       <Link onClick={() => handleVisible()} to="/checkCalories">
-        <Box
-          className="links"
-          id={isActive === 'dairy' ? 'active' : 'notActive'}
-          fontWeight="500"
-          color="rgb(184,56,5)"
-        >
+        <Box className="links" fontWeight="500" color="rgb(184,56,5)">
           Diary
         </Box>
       </Link>
+      <Link onClick={() => handleVisible()} to="/checkCalories/scan">
+        <Box className="links" fontWeight="500" color="rgb(184,56,5)">
+          Scan
+        </Box>
+      </Link>
       <Link onClick={() => handleVisible()} to="/checkCalories/plan">
-        <Box
-          className="links"
-          id={isActive === 'plans' ? 'active' : 'notActive'}
-          fontWeight="500"
-          color="rgb(184,56,5)"
-        >
+        <Box className="links" fontWeight="500" color="rgb(184,56,5)">
           Plans
         </Box>
       </Link>
       <Link onClick={() => handleVisible()} to="/checkCalories/help">
-        <Box
-          className="links"
-          id={isActive === 'help' ? 'active' : 'notActive'}
-          fontWeight="500"
-          color="rgb(184,56,5)"
-        >
+        <Box className="links" fontWeight="500" color="rgb(184,56,5)">
           Help
         </Box>
       </Link>
