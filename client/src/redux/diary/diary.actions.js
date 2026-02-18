@@ -1,5 +1,6 @@
 import { ERROR_STATE, GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_FOOD_PRODUCT_LIST, LOADING_STATE, SUCCESS_STATE } from "./diary.types";
 import axios from 'axios'
+import { API_BASE } from '../../config'
 
 export const diaryItemsLoading = () => ({ type: LOADING_STATE })
 export const diaryItemsSuccess = () => ({ type: SUCCESS_STATE })
@@ -10,7 +11,7 @@ const userToken = localStorage.getItem('userToken')
 export const getfoodProducts = (token) => async (dispatch) => {
     dispatch(diaryItemsLoading());
     try {
-        let res = await axios.get('https://nutrimeter-server.onrender.com/userprofile/getitems', {
+        let res = await axios.get(`${API_BASE}/userprofile/getitems`, {
             headers: {
                 token
             }
@@ -28,7 +29,7 @@ export const getfoodProducts = (token) => async (dispatch) => {
 export const getAllProductToDisplay = (query) => async (dispatch) => {
     dispatch(diaryItemsLoading())
     try {
-        let res = await axios.get(`https://nutrimeter-server.onrender.com/foodProducts?q=${query}`);
+        let res = await axios.get(`${API_BASE}/foodProducts?q=${query}`);
         dispatch({ type: GET_ALL_PRODUCTS, payload: res.data })
     } catch (error) {
         dispatch(diaryItemsError())
@@ -40,7 +41,7 @@ export const getAllProductToDisplay = (query) => async (dispatch) => {
 export const getAllCategories = () => async (dispatch) => {
     dispatch(diaryItemsLoading());
     try {
-        let res = await axios('https://nutrimeter-server.onrender.com/foodProducts/allcategories');
+        let res = await axios(`${API_BASE}/foodProducts/allcategories`);
         dispatch({ type: GET_ALL_CATEGORIES, payload: res.data });
     } catch (error) {
         dispatch(diaryItemsError())
@@ -53,7 +54,7 @@ export const getAllCategories = () => async (dispatch) => {
 export const addNewProduct = (body, token) => async (dispatch) => {
     dispatch(diaryItemsLoading())
     try {
-        let res = await axios.post('https://nutrimeter-server.onrender.com/userprofile/additem', body, {
+        let res = await axios.post(`${API_BASE}/userprofile/additem`, body, {
             headers: {
                 token: localStorage.getItem('userToken')
             }
@@ -66,10 +67,19 @@ export const addNewProduct = (body, token) => async (dispatch) => {
     }
 }
 
+export const scanNutritionImage = (file) => async () => {
+    const formData = new FormData()
+    formData.append('image', file)
+    const res = await axios.post(`${API_BASE}/scan`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+    })
+    return res.data
+}
+
 export const deleteItem = (id, token) => async (dispatch) => {
     dispatch(diaryItemsLoading())
     try {
-        await axios.delete('https://nutrimeter-server.onrender.com/userprofile/' + id, {
+        await axios.delete(`${API_BASE}/userprofile/` + id, {
             headers: {
                 token: userToken
             }

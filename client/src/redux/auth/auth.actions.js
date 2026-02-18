@@ -1,6 +1,5 @@
-
 import axios from "axios"
-
+import { API_BASE } from "../../config"
 import {
     AUTH_SIGN_IN_ERROR, AUTH_SIGN_IN_LOADING,
     AUTH_SIGN_IN_SUCCESS, AUTH_SIGN_OUT,
@@ -8,14 +7,12 @@ import {
     AUTH_SIGN_UP_SUCCESS
 } from "./auth.types"
 
-
-
 export const LoginApi = (creds) => async (dispatch) => {
     dispatch({
         type: AUTH_SIGN_IN_LOADING
     })
     try {
-        let res = await axios.post("https://nutrimeter-server.onrender.com/user/auth/login", creds)
+        let res = await axios.post(`${API_BASE}/user/auth/login`, creds)
         dispatch({
             type: AUTH_SIGN_IN_SUCCESS,
             payload: res.data
@@ -38,7 +35,7 @@ export const SignupApi = (creds) => async (dispatch) => {
         type: AUTH_SIGN_UP_LOADING
     })
     try {
-        let res = await axios.post("https://nutrimeter-server.onrender.com/user/auth/register", creds)
+        let res = await axios.post(`${API_BASE}/user/auth/register`, creds)
 
         dispatch({
             type: AUTH_SIGN_UP_SUCCESS,
