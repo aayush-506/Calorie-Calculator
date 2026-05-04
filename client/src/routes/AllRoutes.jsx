@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import BlogPage from '../pages/BlogPage/BlogPage'
 import Diarypage from '../pages/diary/Diarypage'
+import LogHistoryPage from '../pages/diary/LogHistoryPage'
 import HomePage from '../pages/HomePage'
 // import Trends from '../pages/Trends'
 import About from '../pages/About'
@@ -47,6 +48,14 @@ const AllRoutes = () => {
         element={
           <AuthRoute>
             <Diarypage />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path="/checkCalories/history"
+        element={
+          <AuthRoute>
+            <LogHistoryPage />
           </AuthRoute>
         }
       />

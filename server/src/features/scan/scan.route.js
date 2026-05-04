@@ -1,10 +1,11 @@
 const express = require("express");
 const multer = require("multer");
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const axios = require("axios");
 
 const router = express.Router();
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+// 25MB limit for modern mobile camera photos
+const MAX_FILE_SIZE = 25 * 1024 * 1024; 
 const ALLOWED_MIMES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 
 const storage = multer.memoryStorage();
@@ -42,56 +43,85 @@ function parseJsonFromResponse(text) {
   }
 }
 
-router.post("/", upload.single("image"), async (req, res) => {
+/**
+ * AI Scan Route
+ * - Upgraded to support Gemini 2.5 and raw Access Tokens (AQ. prefix)
+ * - Handles Multer errors explicitly
+ */
+router.post("/", (req, res, next) => {
+  upload.single("image")(req, res, (err) => {
+    if (err instanceof multer.MulterError) {
+      if (err.code === "LIMIT_FILE_SIZE") {
+        return res.status(400).json({ error: "Photo too large. Max limit is 25MB." });
+      }
+      return res.status(400).json({ error: "Upload error: " + err.message });
+    } else if (err) {
+      return res.status(400).json({ error: err.message });
+    }
+    next();
+  });
+}, async (req, res) => {
   if (!req.file) {
-    return res.status(400).json({ error: "No image file provided. Use field name 'image'." });
+    return res.status(400).json({ error: "No image file provided." });
   }
 
   const apiKey = process.env.GEMINI_API_KEY;
+  const modelId = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+
   if (!apiKey) {
-    return res.status(503).json({ error: "Scan service is not configured (missing GEMINI_API_KEY)." });
+    return res.status(503).json({ error: "AI service not configured." });
   }
 
   try {
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const modelId = process.env.GEMINI_MODEL || "gemini-2.5-flash";
-    const model = genAI.getGenerativeModel({ model: modelId });
+    let textResult = "";
 
-    const imagePart = {
-      inlineData: {
-        mimeType: req.file.mimetype,
-        data: req.file.buffer.toString("base64"),
+    // Unified Authentication for new "AQ." and legacy "AIza" API keys
+    // We use the recommended 'x-goog-api-key' header which supports both formats
+    const response = await axios.post(
+      `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent`,
+      {
+        contents: [{
+          parts: [
+            { text: NUTRITION_EXTRACTION_PROMPT },
+            {
+              inline_data: {
+                mime_type: req.file.mimetype,
+                data: req.file.buffer.toString("base64"),
+              },
+            },
+          ],
+        }],
       },
-    };
+      {
+        headers: {
+          "x-goog-api-key": apiKey,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    
+    textResult = response.data.candidates?.[0]?.content?.parts?.[0]?.text;
 
-    const result = await model.generateContent([imagePart, { text: NUTRITION_EXTRACTION_PROMPT }]);
-    const response = result.response;
-    const text = response?.text?.();
-
-    if (!text) {
-      return res.status(502).json({
-        error: "Could not extract nutrition facts from the image. Try another image or check the content.",
-      });
+    if (!textResult) {
+      throw new Error("Empty response from AI engine.");
     }
 
-    const json = parseJsonFromResponse(text);
-    if (!json) {
-      return res.status(502).json({
-        error: "Could not parse nutrition data from the response.",
-        raw: text.slice(0, 500),
-      });
+    const decoded = parseJsonFromResponse(textResult);
+    if (!decoded) {
+      return res.status(502).json({ error: "Could not parse nutrition data.", raw: textResult.slice(0, 200) });
     }
 
-    if (json.error) {
-      return res.status(200).json(json);
-    }
+    return res.status(200).json(decoded);
 
-    return res.status(200).json(json);
   } catch (err) {
-    console.error("Scan error:", err);
-    const status = err?.response?.status === 429 ? 429 : 502;
-    return res.status(status).json({
-      error: err?.message || "Scan service failed. Please try again.",
+    console.error("Scan detailed error:", err.response?.data || err.message);
+    const apiError = err.response?.data?.error;
+    const statusCode = err.response?.status || 502;
+    
+    return res.status(statusCode).json({
+      error: apiError?.message || "AI Analysis failed.",
+      details: apiError?.status || err.message,
+      reason: apiError?.reason || "Check your API credentials and model permissions."
     });
   }
 });

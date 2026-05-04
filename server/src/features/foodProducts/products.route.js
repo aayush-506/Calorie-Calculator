@@ -11,7 +11,7 @@ app.get('/', async (req, res) => {
     try {
         if (q) {
             const regex = new RegExp(q, 'i');
-            products = await foodProducts.find({ Category: regex}); 
+            products = await foodProducts.find({ Description: regex }); 
         } else {
             products = await foodProducts.find().limit(limit).skip((page - 1) * limit);
         }

@@ -1,116 +1,100 @@
 import {
+  Box,
   CircularProgress,
   CircularProgressLabel,
   HStack,
   Stack,
   Text,
   VStack,
+  Flex,
+  Heading,
 } from '@chakra-ui/react'
 import React from 'react'
+import { Doughnut } from 'react-chartjs-2'
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import MacroTargets from '../macroTargets/MacroTargets'
-import { StyledBox } from './energySummery.styles'
 import { useSelector } from 'react-redux'
-import { colorOfCircle, getTotalEnergy } from './energySummeryData'
+import { getTotalEnergy } from './energySummeryData'
+
+ChartJS.register(ArcElement, Tooltip, Legend)
 
 const EnergySummery = () => {
-  const { foodItemsInList, baseValue, loading } = useSelector(
+  const { foodItemsInList, baseValue = 2000, loading } = useSelector(
     (store) => store.diary,
   )
 
+  const { total, remaining, per } = getTotalEnergy(foodItemsInList || [], baseValue)
+
+  const chartData = {
+    labels: ['Consumed', 'Remaining'],
+    datasets: [
+      {
+        data: [total, Math.max(0, remaining)],
+        backgroundColor: ['rgba(249, 115, 22, 0.8)', 'rgba(226, 232, 240, 0.4)'],
+        borderColor: ['#F97316', '#CBD5E1'],
+        borderWidth: 1,
+        cutout: '80%',
+      },
+    ],
+  }
+
+  const chartOptions = {
+    plugins: {
+      legend: { display: false },
+      tooltip: { enabled: true },
+    },
+    maintainAspectRatio: false,
+  }
+
   return (
-    <Stack
+    <Box
       w="full"
-      borderRadius="md"
+      bg="white"
+      borderRadius="2xl"
+      p={{ base: 4, lg: 6 }}
+      boxShadow="0 10px 15px -3px rgba(0, 0, 0, 0.1)"
       borderWidth="1px"
-      borderColor="gray.200"
-      overflow="hidden"
-      direction={{ base: 'column', lg: 'row' }}
+      borderColor="gray.100"
     >
-      <VStack
-        h="full"
-        borderRight="1px solid #d6d4d4"
-        px="8px"
-        justifyContent="center"
-        alignItems="center"
-        spacing={4}
-      >
-        <Text fontSize="sm" pl="5px" fontWeight="600" w="full">
-          Energy Summary
-        </Text>
-        <HStack>
-          <VStack spacing={0} h="115px">
-            <CircularProgress
-              size="100px"
-              thickness="15px"
-              value={getTotalEnergy(foodItemsInList, baseValue).per}
-              isIndeterminate={loading}
-              color={colorOfCircle(
-                getTotalEnergy(foodItemsInList, baseValue).per,
-              )}
+      <Stack direction={{ base: 'column', lg: 'row' }} spacing={8} align="center">
+        {/* Left Side: Energy Gauge */}
+        <VStack flex={1} spacing={4} align="center" position="relative">
+          <Box w="200px" h="200px" position="relative">
+            <Doughnut data={chartData} options={chartOptions} />
+            <VStack
+              position="absolute"
+              top="50%"
+              left="50%"
+              transform="translate(-50%, -50%)"
+              spacing={0}
             >
-              <CircularProgressLabel
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <p style={{ fontSize: '15px', fontWeight: 'bold' }}>
-                  {getTotalEnergy(foodItemsInList, baseValue).total.toFixed(0)}
-                </p>
-                <p style={{ fontSize: '11px', color: 'gray' }}>kcal</p>
-              </CircularProgressLabel>
-            </CircularProgress>
-            <Text fontSize="11px" fontWeight="bold">
-              CONSUMED
-            </Text>
+              <Text fontSize="4xl" fontWeight="900" color="gray.800" lineHeight="1">
+                {total.toFixed(0)}
+              </Text>
+              <Text fontSize="sm" fontWeight="700" color="gray.400" textTransform="uppercase">
+                kcal
+              </Text>
+            </VStack>
+          </Box>
+          <VStack spacing={1}>
+            <Text fontSize="md" fontWeight="800" color="gray.700">Daily Energy</Text>
+            <HStack color="gray.500" fontSize="sm" fontWeight="600">
+              <Text color="orange.500">{total.toFixed(0)} kcal in</Text>
+              <Box w={1} h={1} bg="gray.300" borderRadius="full" />
+              <Text>{remaining.toFixed(0)} kcal left</Text>
+            </HStack>
           </VStack>
-          <VStack spacing={0} h="115px">
-            <CircularProgress
-              size="100px"
-              thickness="15px"
-              value={getTotalEnergy(foodItemsInList, baseValue).remPer}
-              isIndeterminate={loading}
-              color={colorOfCircle(
-                getTotalEnergy(foodItemsInList, baseValue).per,
-              )}
-            >
-              <CircularProgressLabel
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <p style={{ fontSize: '15px', fontWeight: 'bold' }}>
-                  {getTotalEnergy(foodItemsInList, baseValue).remaining.toFixed(
-                    0,
-                  )}
-                </p>
-                <p style={{ fontSize: '11px', color: 'gray' }}>kcal</p>
-              </CircularProgressLabel>
-            </CircularProgress>
-            <Text fontSize="11px" fontWeight="bold">
-              BURNED
-            </Text>
-          </VStack>
-          <StyledBox>
-            <div className="topBox">
-              {getTotalEnergy(foodItemsInList, baseValue).remaining.toFixed(0)}
-            </div>
-            <div className="bottomBox">Calories remaining</div>
-            <Text fontSize="11px" color="black" fontWeight="bold">
-              BUDGET
-            </Text>
-          </StyledBox>
-        </HStack>
-      </VStack>
-      <HStack h="full" px="8px" justifyContent="center" alignItems="center">
-        <MacroTargets />
-      </HStack>
-    </Stack>
+        </VStack>
+
+        {/* Divider for desktop */}
+        <Box display={{ base: 'none', lg: 'block' }} w="1px" h="180px" bg="gray.100" />
+
+        {/* Right Side: Detailed Metrics & Macros */}
+        <Box flex={1.5} w="full">
+          <MacroTargets />
+        </Box>
+      </Stack>
+    </Box>
   )
 }
 

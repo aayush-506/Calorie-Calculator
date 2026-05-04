@@ -1,40 +1,71 @@
-import { HStack, Image, Text } from '@chakra-ui/react'
+import { HStack, Icon, Box, Text, Flex, useDisclosure } from '@chakra-ui/react'
 import React from 'react'
 import { FaWalking } from 'react-icons/fa'
 import { GiHealthNormal } from 'react-icons/gi'
 import { BiNotepad } from 'react-icons/bi'
+import { MdRestaurantMenu } from 'react-icons/md'
+import { ExerciseModal, BiometricModal, NotesModal } from './HealthModals'
 
 const AddFoodItem = ({ toggleVisibility }) => {
-  const buttonProps = {
-    padding: '8px 12px',
-    borderRadius: 'md',
-    fontSize: { base: 'xs', md: 'sm' },
-    fontWeight: 'bold',
-    color: 'gray.600',
-    _hover: { bg: 'gray.100' },
-    borderWidth: '1px',
-    borderColor: 'gray.200',
-    bg: 'white',
-  }
+  const exerciseDisc  = useDisclosure()
+  const biometricDisc = useDisclosure()
+  const notesDisc     = useDisclosure()
+
+  const actions = [
+    { label: 'ADD FOOD',       icon: MdRestaurantMenu, color: 'orange', onClick: toggleVisibility },
+    { label: 'ADD EXERCISE',   icon: FaWalking,         color: 'green',  onClick: exerciseDisc.onOpen  },
+    { label: 'ADD BIOMETRICS', icon: GiHealthNormal,    color: 'red',    onClick: biometricDisc.onOpen },
+    { label: 'ADD NOTES',      icon: BiNotepad,          color: 'blue',   onClick: notesDisc.onOpen     },
+  ]
+
   return (
-    <HStack w="full" spacing={2} flexWrap="wrap">
-      <HStack {...buttonProps} cursor="pointer" onClick={toggleVisibility} as="button" type="button">
-        <Image src="/Images/appleImage.png" w="14px" alt="" />
-        <Text>ADD ITEM</Text>
+    <>
+      <HStack w="full" spacing={3} flexWrap="wrap">
+        {actions.map((action, idx) => (
+          <Flex
+            key={idx}
+            as="button"
+            onClick={action.onClick}
+            align="center"
+            px={4}
+            py={2.5}
+            bg="white"
+            borderRadius="full"
+            borderWidth="1px"
+            borderColor="gray.100"
+            boxShadow="sm"
+            transition="all 0.2s"
+            _hover={{
+              bg: `${action.color}.50`,
+              borderColor: `${action.color}.200`,
+              transform: 'translateY(-1px)',
+              boxShadow: 'md',
+            }}
+            _active={{ transform: 'translateY(0)' }}
+          >
+            <Flex
+              w={6}
+              h={6}
+              bg={`${action.color}.100`}
+              borderRadius="full"
+              align="center"
+              justify="center"
+              mr={3}
+            >
+              <Icon as={action.icon} color={`${action.color}.500`} boxSize={3.5} />
+            </Flex>
+            <Text fontSize="xs" fontWeight="800" color="gray.700" letterSpacing="0.5px">
+              {action.label}
+            </Text>
+          </Flex>
+        ))}
       </HStack>
-      <HStack {...buttonProps} cursor="pointer" as="button" type="button">
-        <FaWalking color="green" fontSize={14} />
-        <Text>ADD EXERCISE</Text>
-      </HStack>
-      <HStack {...buttonProps} cursor="pointer" as="button" type="button">
-        <GiHealthNormal color="red" fontSize={14} />
-        <Text>ADD BIOMETRICS</Text>
-      </HStack>
-      <HStack {...buttonProps} cursor="pointer" as="button" type="button">
-        <BiNotepad color="blue" fontSize={14} />
-        <Text>ADD NOTES</Text>
-      </HStack>
-    </HStack>
+
+      {/* Modals */}
+      <ExerciseModal  isOpen={exerciseDisc.isOpen}  onClose={exerciseDisc.onClose}  />
+      <BiometricModal isOpen={biometricDisc.isOpen} onClose={biometricDisc.onClose} />
+      <NotesModal     isOpen={notesDisc.isOpen}     onClose={notesDisc.onClose}     />
+    </>
   )
 }
 

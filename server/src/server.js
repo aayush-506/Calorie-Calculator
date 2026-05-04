@@ -5,6 +5,7 @@ const cors = require('cors');
 const port = process.env.PORT || 8000;
 const connect = require('./configs/dbConfig')
 const userRoute = require('./features/userProfile/user.route')
+const healthRoute = require('./features/userProfile/health.route')
 const authRoute = require('./features/auth/auth.route')
 const productsRoute = require('./features/foodProducts/products.route')
 const scanRoute = require('./features/scan/scan.route')
@@ -20,6 +21,7 @@ app.get('/', async (req, res) => {
 app.use(cors())
 app.use(express.json())
 app.use('/userprofile', userRoute)
+app.use('/health', healthRoute)
 app.use('/user/auth', authRoute)
 app.use('/foodProducts', productsRoute)
 app.use('/scan', scanRoute)

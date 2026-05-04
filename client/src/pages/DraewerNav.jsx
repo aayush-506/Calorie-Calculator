@@ -12,8 +12,18 @@ import {
   Stack,
   Text,
   useColorMode,
-  useDisclosure, Popover, PopoverTrigger,PopoverContent,PopoverHeader,PopoverArrow,PopoverCloseButton,PopoverBody,
+  useDisclosure,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverBody,
   Flex,
+  CloseButton,
+  VStack,
+  HStack,
 } from "@chakra-ui/react";
 import {  FaBars } from "react-icons/fa";
 import { FaAppleAlt } from "react-icons/fa";
@@ -27,91 +37,96 @@ function DraewerNav() {
 
 
   return (
-    <Box marginRight={5}>
-      <Button mL={"auto"} width={6} onClick={onOpen}>
-        <IconButton _hover={{bg:"orange.400", color:"white"}} icon={<FaBars></FaBars>}></IconButton>
-      </Button>
+    <Box marginRight={2}>
+      <IconButton
+        aria-label="Open Navigation"
+        variant="ghost"
+        color="orange.500"
+        fontSize="20px"
+        onClick={onOpen}
+        icon={<FaBars />}
+        _hover={{ bg: "orange.50" }}
+      />
+      
       <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
-        <Center w={2}>
-          <DrawerContent  display={"Flex"} alignItems={"center"} justifyContent={"center"}
-          >
-            <Box ml={4}>
+        <DrawerContent bg="white">
+          <DrawerHeader borderBottomWidth="1px" py={4}>
+            <Flex justify="space-between" align="center">
               <Image 
-             
-              width={{ base: "150px", md: "160px", lg: "190px" }}
-              src="https://i.postimg.cc/7hV5qrzC/Color-logo-no-background.png"
-            ></Image>
-            </Box>
-            <DrawerBody>
-              <Popover isLazy w="200px">
-                <PopoverTrigger>
-                  <Button bg="none" color="black" _hover={{color:"orange.500"}} fontSize="16px" fontWeight="bold" ml="-12px">Products </Button>
-                  {/* <Button bg="none" color="black" _hover={{color:"orange.500"}} fontSize={fontSize} fontWeight="none" ml="-12px">Products </Button> */}
+                width="140px"
+                src="https://i.postimg.cc/7hV5qrzC/Color-logo-no-background.png"
+                alt="Logo"
+              />
+              <CloseButton onClick={onClose} />
+            </Flex>
+          </DrawerHeader>
 
-  </PopoverTrigger>
-  <PopoverContent>
-    <PopoverHeader fontWeight='semibold'>Cronometer Products</PopoverHeader>
-    <PopoverArrow />
-    <PopoverCloseButton />
-    <NavLink to="/">
-    <PopoverBody _hover={{color:"orange"}}>
-    <IconButton isRound={true} bg="green.300" color="red.500"  size="lg" mr="20px"  icon={<FaAppleAlt></FaAppleAlt>}>
-    </IconButton>
-      For Individuals.
-    </PopoverBody>
-    </NavLink>
+          <DrawerBody p={0}>
+            <VStack align="stretch" spacing={0}>
+              <Box p={4} borderBottomWidth="1px">
+                <Popover isLazy placement="bottom-start">
+                  <PopoverTrigger>
+                    <HStack justify="space-between" cursor="pointer" _hover={{ color: "orange.500" }}>
+                      <Text fontWeight="600" fontSize="lg">Products</Text>
+                      <Text fontSize="sm">▾</Text>
+                    </HStack>
+                  </PopoverTrigger>
+                  <PopoverContent border="none" boxShadow="lg">
+                    <PopoverHeader fontWeight="semibold">Nutrimeter Products</PopoverHeader>
+                    <PopoverArrow />
+                    <PopoverCloseButton />
+                    <PopoverBody p={2}>
+                      <VStack align="stretch">
+                        <NavLink to="/" onClick={onClose}>
+                          <HStack p={2} _hover={{ bg: "gray.50" }} borderRadius="md">
+                            <IconButton isRound size="sm" bg="green.100" color="green.600" icon={<FaAppleAlt />} />
+                            <Text>For Individuals</Text>
+                          </HStack>
+                        </NavLink>
+                        <NavLink to="/pro" onClick={onClose}>
+                          <HStack p={2} _hover={{ bg: "gray.50" }} borderRadius="md">
+                            <IconButton isRound size="sm" bg="red.100" color="red.600" icon={<FaAppleAlt />} />
+                            <Text>For Healthcare Professionals</Text>
+                          </HStack>
+                        </NavLink>
+                      </VStack>
+                    </PopoverBody>
+                  </PopoverContent>
+                </Popover>
+              </Box>
 
-    <NavLink to="/pro">
-    <PopoverBody _hover={{color:"orange"}}>
-    <IconButton isRound={true} bg="red.200" color="green.500"  size="lg" mr="20px"  icon={<FaAppleAlt></FaAppleAlt>}>
-    </IconButton>
-      For Healthcare Professionals.
-    </PopoverBody>
-    </NavLink>
-  </PopoverContent>
-</Popover>
-
-
-              <Box p="1">
-                <NavLink to="/blog">
-                  <Text fontWeight="bold" _hover={{color:"orange"}}>Blog</Text>
+              <NavDrawerItem to="/blog" label="Blog" onClick={onClose} />
+              <NavDrawerItem to="/" label="Forums" onClick={onClose} />
+              <NavDrawerItem to="/about" label="About" onClick={onClose} />
+              <NavDrawerItem to="/support" label="Support" onClick={onClose} />
+              
+              <Box p={4} mt={4}>
+                <NavLink to="/login" onClick={onClose}>
+                  <Button w="full" colorScheme="orange">
+                    Login
+                  </Button>
                 </NavLink>
               </Box>
-
-              <Box p="1">
-                <NavLink to="/">
-                  <Text fontWeight="bold" _hover={{color:"orange"}}>Forums</Text>
-                </NavLink>
-              </Box>
-              <Box p="1">
-                  <NavLink to="/about">
-                    <Text fontWeight="bold" _hover={{color:"orange"}} >
-                      About
-                    </Text>
-                  </NavLink>
-                  
-              </Box>
-              <Box p="1">
-                  <NavLink to="/support">
-                    <Text fontWeight="bold" _hover={{color:"orange"}}>
-                      Support
-                    </Text>
-                  </NavLink>
-                  
-              </Box>
-              <Box p="1">
-                  <NavLink to="/login">
-                    <Button bg={"orange.400"} colorScheme="orange" color="white">
-                      <Text fontSize={fontSize}>Login</Text>
-                    </Button>
-                  </NavLink>
-              </Box>
-            </DrawerBody>
-          </DrawerContent>
-        </Center>
+            </VStack>
+          </DrawerBody>
+        </DrawerContent>
       </Drawer>
     </Box>
   );
 }
+
+const NavDrawerItem = ({ to, label, onClick }) => (
+  <Box borderBottomWidth="1px" _hover={{ bg: "gray.50" }}>
+    <NavLink to={to} onClick={onClick}>
+      <Box p={4}>
+        <Text fontWeight="600" fontSize="lg" _hover={{ color: "orange.500" }}>
+          {label}
+        </Text>
+      </Box>
+    </NavLink>
+  </Box>
+)
+
+
 export default DraewerNav;

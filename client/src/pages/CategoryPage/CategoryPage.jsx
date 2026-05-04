@@ -37,7 +37,7 @@ const CategoryPage = () => {
       default:
         return data;
     }
-  }, [data]);
+  }, [type]);
 
   return (
     <div style={{ width: "auto" }}>

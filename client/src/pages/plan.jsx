@@ -1,646 +1,251 @@
+import React from "react";
 import {
-    Accordion,
-    AccordionButton,
-    AccordionIcon,
-    AccordionItem,
-    AccordionPanel,
-    Box,
-    Button,
-    Center,
-    Flex,
-    Image,
-    SimpleGrid,
-    Text,
-  } from "@chakra-ui/react";
-  import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+  Box,
+  Button,
+  Center,
+  Flex,
+  Image,
+  SimpleGrid,
+  Text,
+  VStack,
+  Heading,
+  HStack,
+  Icon,
+  Badge,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionIcon,
+  AccordionPanel,
+  Container,
+} from "@chakra-ui/react";
+import { MdCheckCircle, MdStar, MdBusiness, MdShield, MdHelpOutline } from "react-icons/md";
 import AfterLoginPageNavbar from "../components/AfterLoginPageNavbar";
 import Footer from "../components/Footer";
-  
-  
-function Plan() {
-      const liLinks = [
-          {
-            name: "Blog",
-          },
-          {
-            name: "Forums",
-          },
-          {
-            name: "Privacy",
-          },
-          {
-            name: "Terms",
-          },
-          {
-            name: "Affiliates",
-          },
-          {
-            name: "Jobs",
-          },
-        ];
-  
-    return (
-      <Box overflowX={"hidden"}>
-        <AfterLoginPageNavbar currentLink='plans'/>
-        <Box m={5} ml={10}>
-          <Text
-            fontSize={25}
-            textAlign={"left"}
-            fontWeight={600}
-            color={"gray.600"}
-          >
-            Plans
-          </Text>
-          <Text textAlign={"left"} color={"gray.400"} fontWeight={600}>
-            Check out our range of affordable plans for individuals or for
-            healthcare professionals.
-          </Text>
-        </Box>
-  
-        <SimpleGrid columns={[1, 2, 3, 4]} ml={10} width={"100%"}>
-          <Box
-            border={"1px"}
-            color={"gray.200"}
-            h={400}
-            width={"250px"}
-            boxShadow={"xl"}
-            mt={10}
-          >
-            <Center pt={5} pb={5}>
-              <Image
-                src={
-                  "https://cdn1.cronometer.com/2021/landing/crono-icon-main-nav.svg"
-                }
-                width={"50px"}
-              />
-            </Center>
-            <Text pb={5} textAlign={"center"} color={"gray.600"} fontSize={"23px"} fontWeight={700}>
-              BASIC
-            </Text>
-            <Text
-              pb={5}
-              pl={5}
-              pr={5}
-              textAlign={"center"}
-              color={"gray.600"}
-              fontSize={"16px"}
-              fontWeight={400}
-            >
-              The basic tool you need to track your nutrition for free!
-            </Text>
-            <Text color={"gray.600"} textAlign={"center"} fontSize={"23px"} fontWeight={700}>
-              $0
-            </Text>
-            <Text
-              h={"82px"}
-              color={"gray.600"}
-              fontSize={"13px"}
-              fontWeight={500}
-              textAlign={"center"}
-            >
-              USD/Month
-            </Text>
-            <Center>
-            <Button
-              color={"white"}
-              border={"1px"}
-              size={"sm"}
-              width={"90%"}
-              backgroundColor={"rgb(211,230,248)"}
-              background={"none"}
-              textAlign={"center"}
-            >
-              <Text color={"black"}>Current Plan</Text>
-            </Button>
-            </Center>
-          </Box>
-  
-          {/* 2nd */}
-          <Box
-            border={"1px"}
-            mt={10}
-            color={"gray.200"}
-            h={400}
-            width={"250px"}
-            boxShadow={"xl"}
-          >
-            <Center pt={5} pb={5}>
-              <Image
-                src={"https://cdn1.cronometer.com/2021/landing/gold-icon_1.svg"}
-                width={"50px"}
-              />
-            </Center>
-            <Text pb={5} textAlign={"center"} color={"gray.600"} fontSize={"23px"} fontWeight={700}>
-              GOLD
-            </Text>
-            <Text
-              pb={5}
-              pl={5}
-              pr={5}
-              textAlign={"center"}
-              color={"gray.600"}
-              fontSize={"16px"}
-              fontWeight={400}
-            >
-              For those that want to get serious about their health.
-            </Text>
-            <Text color={"gray.600"} textAlign={"center"} fontSize={"23px"} fontWeight={700}>
-              $49.99
-            </Text>
-            <Text
-              h={"82px"}
-              color={"gray.600"}
-              fontSize={"13px"}
-              fontWeight={500}
-              textAlign={"center"}
-            >
-              USD/Year
-            </Text>
-            <Center>
-            <Button
-              color={"white"}
-              border={"1px"}
-              size={"sm"}
-              pl={"25%"}
-              pr={"25%"}
-              backgroundColor={"orange.400"}
-              background={"none"}
-            >
-              Subscribe Now
-            </Button>
-            </Center>
-          </Box>
-  
-          {/* 3rd */}
-          <Box
-          mt={10}
-            border={"1px"}
-            color={"gray.200"}
-            h={400}
-            width={"250px"}
-            boxShadow={"xl"}
-          >
-            <Center pt={5} pb={5}>
-              <Image
-                src={
-                  "https://cdn1.cronometer.com/2021/landing/pro-icon-main-nav.svg"
-                }
-                width={"50px"}
-              />
-            </Center>
-            <Text pb={5} textAlign={"center"} color={"gray.600"} fontSize={"23px"} fontWeight={700}>
-              PRO
-            </Text>
-            <Text
-              pb={5}
-              textAlign={"center"}
-              pl={5}
-              pr={5}
-              color={"gray.600"}
-              fontSize={"16px"}
-              fontWeight={400}
-            >
-              For health coaches and trainers.
-            </Text>
-            <Text color={"gray.600"} textAlign={"center"} fontSize={"23px"} fontWeight={700}>
-              $29.95
-            </Text>
-            <Text pb={2} color={"gray.600"} fontSize={"13px"} textAlign={"center"} fontWeight={500}>
-              USD/Month
-            </Text>
-            <Text
-              h={"55px"}
-              textAlign={"center"}
-              color={"gray.600"}
-              fontSize={"11px"}
-              fontWeight={400}
-            >
-              UP TO 10 CLIENTS Add more for $2.25/client per month
-            </Text>
-            <Center>
-            <Button
-              color={"white"}
-              textAlign={"center"}
-              border={"1px"}
-              size={"sm"}
-              pl={"25%"}
-              pr={"25%"}
-              backgroundColor={"green.400"}
-              background={"none"}
-            >
-              Subscribe Now
-            </Button>
-            </Center>
-          </Box>
-  
-          {/* 4rt  */}
-          <Box
-          mt={10}
-            border={"1px"}
-            borderRadius={"10px"}
-            color={"gray.200"}
-            h={400}
-            width={"250px"}
-            boxShadow={"xl"}
-          >
-            <Center pt={5} pb={5}>
-              <Image
-                src={
-                  "https://cdn1.cronometer.com/2021/landing/pro-icon-main-nav.svg"
-                }
-                width={"50px"}
-              />
-            </Center>
-            <Text pb={5} textAlign={"center"} color={"gray.600"} fontSize={"23px"} fontWeight={700}>
-              ENTERPRISE
-            </Text>
-            <Text
-              pb={5}
-              pl={5}
-              pr={5}
-              textAlign={"center"}
-              color={"gray.600"}
-              fontSize={"16px"}
-              fontWeight={400}
-            >
-              For hospitals, schools and research teams.
-            </Text>
-            <Text color={"gray.600"} textAlign={"center"} fontSize={"23px"} fontWeight={700}>
-              Contact Us
-            </Text>
-            <Text
-              h={"82px"}
-              color={"gray.600"}
-              fontSize={"11px"}
-              fontWeight={400}
-              textAlign={"center"}
-            >
-              Custom solutions for enterprise businesses
-            </Text>
-            <Center>
-            <Button
-              color={"green.400"}
-              border={"1px"}
-              textAlign={"center"}
-              size={"sm"}
-              pl={"25%"}
-              pr={"25%"}
-              borderColor={"green.400"}
-              background={"none"}
-            >
-              Contact Us
-            </Button>
-            </Center>
-          </Box>
-        </SimpleGrid>
-        <SimpleGrid
-          h={"auto"}
-          mt={20}
-          columns={[1,2,3,4]}
-          ml={10}
-          width={"100%"}
+
+const PlanCard = ({ title, price, period, description, icon, color, isCurrent, features, iconUrl }) => {
+  return (
+    <VStack
+      h="full"
+      p={8}
+      bg="white"
+      borderRadius="3xl"
+      borderWidth="1px"
+      borderColor="gray.100"
+      boxShadow="xl"
+      spacing={6}
+      position="relative"
+      transition="all 0.3s"
+      _hover={{ transform: 'translateY(-10px)', boxShadow: '2xl', borderColor: `${color}.200` }}
+      align="stretch"
+    >
+      {isCurrent && (
+        <Badge
+          position="absolute"
+          top="-4"
+          alignSelf="center"
+          bg="gray.800"
+          color="white"
+          px={4}
+          py={1}
+          borderRadius="full"
+          fontSize="xs"
+          fontWeight="900"
+          letterSpacing="1px"
         >
-          <Box borderRight={"2px"} color={"gray.200"} h={400} width={"260px"}>
-            <Text
-              mb={5}
-              textAlign={"left"}
-              color={"gray.700"}
-              fontSize={"17px"}
-              fontWeight={600}
-            >
-              The Basic tools you need
-            </Text>
-            <Text mb={3} width={"260px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px",textAlign:"center", color: "gray" }}>
-                Log foods, exercise & biometrics
-              </li>
-            </Text>
-            <Text mb={3} width={"260px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                Track all your macros & up to 82 micronutrients
-              </li>
-            </Text>
-            <Text mb={3} width={"260px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                Customizable macro & micronutrient targets
-              </li>
-            </Text>
-            <Text mb={3} width={"260px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                Customizable weight goal settings
-              </li>
-            </Text>
-            <Text mb={3} width={"260px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                Sync with devices like Apple Watch, FitBit and more
-              </li>
-            </Text>
-            <Text mb={3} width={"260px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                Limited health trends & reports
-              </li>
-            </Text>
-            <Text mb={3} width={"260px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                Export your data
-              </li>
-            </Text>
-            <Text mb={3} width={"260px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>Barcode scanner</li>
-            </Text>
-            <Text mb={3} width={"260px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                Mobile and web versions
-              </li>
-            </Text>
-          </Box>
-  
-          {/* 2nd  */}
-          <Box
-            borderRight={"2px"}
-            pr={10}
-            color={"gray.200"}
-            h={400}
-            width={"260px"}
-          >
-            <Text
-              mb={5}
-              textAlign={"left"}
-              color={"gray.700"}
-              fontSize={"17px"}
-              fontWeight={600}
-            >
-              All the Basic tools plus:
-            </Text>
-            <Text mb={3} width={"245px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                No advertisements
-              </li>
-            </Text>
-            <Text mb={3} width={"245px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                Recipe Importer Easily import & create custom recipes from your
-                favourite websites.
-              </li>
-            </Text>
-            <Text mb={3} width={"245px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                Diary Groups & Timestamps Organize your diary into separate groups
-                or meals and add timestamps to diary entries
-              </li>
-            </Text>
-            <Text mb={3} width={"245px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                Target Scheduler Set different Macro Targets for each day of the
-                week.
-              </li>
-            </Text>
-            <Text mb={3} width={"245px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                Fasting Timer Track your fasts & nutrition in one app!
-              </li>
-            </Text>
-            
-          </Box>
-  
-          {/* 3rd  */}
-          <Box borderRight={"2px"} color={"gray.200"} h={400} width={"260px"}>
-            <Text
-              mb={5}
-              textAlign={"left"}
-              color={"gray.700"}
-              fontSize={"17px"}
-              fontWeight={600}
-            >
-              Gold features for you & your clients, plus:
-            </Text>
-            <Text mb={3} width={"245px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                View your clients' diary at any time to monitor compliance
-              </li>
-            </Text>
-            <Text mb={3} width={"245px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                Manage clients' settings and nutrition data
-              </li>
-            </Text>
-            <Text mb={3} width={"245px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                Share custom foods and recipes with your clients
-              </li>
-            </Text>
-            <Text mb={3} width={"245px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                Create and share custom biometrics with your clients
-              </li>
-            </Text>
-            <Text mb={3} width={"245px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                Chat with clients using secure internal messaging
-              </li>
-            </Text>
-            <Text mb={3} width={"245px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                Create Internal Profiles for view of the Professional only
-              </li>
-            </Text>
-            
-            
-          </Box>
-  
-          {/* 4rt  */}
-          <Box borderRight={"2px"} color={"gray.200"} h={400} width={"260px"}>
-            <Text
-              mb={5}
-              textAlign={"left"}
-              color={"gray.700"}
-              fontSize={"17px"}
-              fontWeight={600}
-            >
-              All Pro features plus:
-            </Text>
-            <Text mb={3} width={"245px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                HIPAA compliance If you are operating as a covered entity under
-                HIPAA, we can sign a BAA.
-              </li>
-            </Text>
-            <Text mb={3} width={"245px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                Risk Assessment & Compliance Review Work with your assessment
-                teams to become an approved vendor.
-              </li>
-            </Text>
-            <Text mb={3} width={"245px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                MSA & Yearly Invoicing Provide a Master Service Agreement and
-                yearly invoicing through your procurement system.
-              </li>
-            </Text>
-            <Text mb={3} width={"245px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                Staff Training Additonal services such as webinars or on-site
-                training.
-              </li>
-            </Text>
-            <Text mb={3} width={"245px"} textAlign={"left"}>
-              <li style={{ fontSize: "14px", color: "gray" }}>
-                API Access Custom API Access
-              </li>
-            </Text>
-          </Box>
-        </SimpleGrid>
-  
-        {/* FAQ  */}
-        <Box mt={10} pl={10} pr={10} mb={10}>
-          <Text
-            color={"rgb(207,79,45)"}
-            mb={5}
-            fontWeight={600}
-            fontSize={"25px"}
-          >
-            Frequently Asked Questions
-          </Text>
-          <Accordion allowToggle>
-            <AccordionItem>
-              <h2>
-                <AccordionButton>
-                  <Box flex="1" textAlign="left">
-                    <Text p={2} fontWeight={600} fontSize={"19px"} color={"gray.600"}>
-                      What forms of payment do you accept?
-                    </Text>
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4}>
-                <Text
-                  textAlign={"left"}
-                  fontSize={"17px"}
-                  fontWeight={400}
-                  color={"gray.700"}
-                >
-                  We accept all major credit cards, except for Discover cards.
-                </Text>
-              </AccordionPanel>
-            </AccordionItem>
-  
-            <AccordionItem>
-              <h2>
-                <AccordionButton>
-                  <Box flex="1" textAlign="left">
-                    <Text p={2} fontWeight={600} fontSize={"19px"} color={"gray.600"}>
-                      Will I be charged sales tax?
-                    </Text>
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4}>
-                <Text
-                  textAlign={"left"}
-                  fontSize={"17px"}
-                  fontWeight={400}
-                  color={"gray.700"}
-                >
-                  If live you live in Canada, you will be charged Canadian sales
-                  tax (we are a Canadian company). If you live outside of Canada,
-                  you will not be charged tax.
-                </Text>
-              </AccordionPanel>
-            </AccordionItem>
-  
-            {/* 3rd  */}
-            <AccordionItem>
-              <h2>
-                <AccordionButton>
-                  <Box flex="1" textAlign="left">
-                    <Text p={2} fontWeight={600} fontSize={"19px"} color={"gray.600"}>
-                      How secure is Cronometer?
-                    </Text>
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4}>
-                <Text
-                  textAlign={"left"}
-                  fontSize={"17px"}
-                  fontWeight={400}
-                  color={"gray.700"}
-                >
-                  We take data security seriously at Cronometer. Not only is your
-                  data protected, we will never sell your data to 3rd parties.
-                </Text>
-              </AccordionPanel>
-            </AccordionItem>
-  
-            {/* 4rt  */}
-            <AccordionItem>
-              <h2>
-                <AccordionButton>
-                  <Box flex="1" textAlign="left">
-                    <Text p={2} fontWeight={600} fontSize={"19px"} color={"gray.600"}>
-                      How do I cancel or change my subscription?
-                    </Text>
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4}>
-                <Text
-                  textAlign={"left"}
-                  fontSize={"17px"}
-                  fontWeight={400}
-                  color={"gray.700"}
-                >
-                  If you purchased gold on our Web version: 
-                  <br />
-                  <br />
-                  1) Log into the web
-                  version  
-                  <br />
-                  <br />
-                  2) The Account Tab is the
-                  section where you update any sign-up information and manage your
-                  subscriptions and personal data. 
-                  <br />
-                  <br />
-                  3) Cancel your Gold
-                  subscription at any time to prevent your subscription from
-                  renewing at the end of your current term. Select Do Not
-                  Auto-Renew from the drop-down menu.
-                </Text>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
+          CURRENT PLAN
+        </Badge>
+      )}
+
+      <VStack spacing={4} align="center">
+        <Box
+          p={4}
+          bg={`${color}.50`}
+          borderRadius="2xl"
+          color={`${color}.500`}
+        >
+          {iconUrl ? (
+            <Image src={iconUrl} w="40px" h="40px" />
+          ) : (
+            <Icon as={icon} boxSize={10} />
+          )}
         </Box>
-        {/* Links  */}
-        <Flex gap={5} m={{base:"20px",md:"auto",lg:"auto"}} width={{base:"10%",md:"30%",lg:"40%"}}>
-          {liLinks.map((el, i) => (
-            <Text
-              mb={5}
-              textAlign={"center"}
-              fontWeight={500}
-              fontSize={"14px"}
-              color={"gray.600"}
-            >
-              <FiberManualRecordIcon
-                style={{
-                  marginRight: "10px",
-                  height: "10px",
-                  width: "10px",
-                  color: "orange",
-                }}
-              />{" "}
-              {el.name}
-            </Text>
-          ))}
-        </Flex>
-        <Footer/>
-      </Box>
-    );
-  }
-  
-  export default Plan;
-  
+        <VStack spacing={1}>
+          <Heading size="md" fontWeight="900" color="gray.800" textTransform="uppercase" letterSpacing="1px">
+            {title}
+          </Heading>
+          <Text fontSize="xs" color="gray.500" fontWeight="700" textAlign="center" maxW="200px">
+            {description}
+          </Text>
+        </VStack>
+      </VStack>
+
+      <VStack spacing={0} align="center">
+        <HStack align="baseline">
+          <Text fontSize="4xl" fontWeight="900" color="gray.800">{price}</Text>
+          <Text fontSize="sm" fontWeight="700" color="gray.400">{period}</Text>
+        </HStack>
+      </VStack>
+
+      <VStack align="stretch" flex={1} spacing={3}>
+        {features.map((feature, idx) => (
+          <HStack key={idx} spacing={3} align="start">
+            <Icon as={MdCheckCircle} color={`${color}.400`} boxSize={4} mt={0.5} />
+            <Text fontSize="xs" fontWeight="700" color="gray.600">{feature}</Text>
+          </HStack>
+        ))}
+      </VStack>
+
+      <Button
+        w="full"
+        h="50px"
+        borderRadius="xl"
+        colorScheme={color}
+        variant={isCurrent ? "outline" : "solid"}
+        fontWeight="800"
+        fontSize="sm"
+        _hover={!isCurrent ? { boxShadow: `0 8px 20px ${color}Alpha.300` } : {}}
+      >
+        {isCurrent ? "Current Plan" : "Subscribe Now"}
+      </Button>
+    </VStack>
+  );
+};
+
+function Plan() {
+  const faqs = [
+    { q: "What forms of payment do you accept?", a: "We accept all major credit cards, except for Discover cards." },
+    { q: "Will I be charged sales tax?", a: "If you live in Canada, you will be charged Canadian sales tax (we are a Canadian company). If you live outside of Canada, you will not be charged tax." },
+    { q: "How secure is Nutrimeter?", a: "We take data security seriously. Not only is your data protected, but we will never sell your data to 3rd parties." },
+    { q: "How do I cancel my subscription?", a: "You can manage your subscription under the Account Tab at any time to prevent auto-renewal at the end of your term." },
+  ];
+
+  return (
+    <Box w="full" minH="100vh" bg="gray.50" position="relative" overflowX="hidden">
+      {/* Mesh Gradient Background (Consistent with Scan Page) */}
+      <Box
+        position="fixed"
+        top="-10%"
+        left="-10%"
+        w="50%"
+        h="50%"
+        bg="orange.100"
+        filter="blur(120px)"
+        opacity={0.3}
+        zIndex={0}
+        borderRadius="full"
+      />
+      <Box
+        position="fixed"
+        bottom="-10%"
+        right="-10%"
+        w="40%"
+        h="40%"
+        bg="orange.200"
+        filter="blur(120px)"
+        opacity={0.3}
+        zIndex={0}
+        borderRadius="full"
+      />
+
+      <VStack w="full" minH="100vh" spacing={0} align="stretch" position="relative" zIndex={1}>
+        <AfterLoginPageNavbar currentLink='plans' />
+
+        <Container maxW="1400px" py={16} px={{ base: 6, xl: 10 }}>
+          <VStack spacing={16} align="stretch">
+            
+            {/* Header Section */}
+            <VStack spacing={4} textAlign="center">
+              <Badge colorScheme="orange" variant="subtle" px={4} py={1} borderRadius="full" fontSize="xs" fontWeight="900" letterSpacing="1px">
+                PRICING & PLANS
+              </Badge>
+              <Heading size="3xl" fontWeight="900" color="gray.800" letterSpacing="-2px">
+                Fuel Your Progress
+              </Heading>
+              <Text fontSize="lg" color="gray.500" maxW="600px" fontWeight="600">
+                Choose the perfect plan to unlock your full health potential, whether you're an individual or a professional coach.
+              </Text>
+            </VStack>
+
+            {/* Plan Cards Grid */}
+            <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8}>
+              <PlanCard
+                title="BASIC"
+                price="$0"
+                period="/mo"
+                description="The essential tool for tracking your daily nutrition."
+                iconUrl="https://cdn1.cronometer.com/2021/landing/crono-icon-main-nav.svg"
+                color="blue"
+                isCurrent={true}
+                features={["Log foods & exercise", "Track all macros", "Up to 82 micronutrients", "Basic reports"]}
+              />
+              <PlanCard
+                title="GOLD"
+                price="$49.99"
+                period="/yr"
+                description="For those getting serious about their health journey."
+                iconUrl="https://cdn1.cronometer.com/2021/landing/gold-icon_1.svg"
+                color="orange"
+                features={["No advertisements", "Recipe Importer", "Diary Groups", "Fasting Timer", "Target Scheduler"]}
+              />
+              <PlanCard
+                title="PRO"
+                price="$29.95"
+                period="/mo"
+                description="The ultimate dashboard for health coaches & trainers."
+                iconUrl="https://cdn1.cronometer.com/2021/landing/pro-icon-main-nav.svg"
+                color="green"
+                features={["Monitor client compliance", "Secure internal messaging", "Share foods & recipes", "Up to 10 clients"]}
+              />
+              <PlanCard
+                title="ENTERPRISE"
+                price="Custom"
+                period=""
+                description="Built for hospitals, schools, and research teams."
+                icon={MdBusiness}
+                color="purple"
+                features={["HIPAA compliance", "Risk assessment support", "API Access", "Monthly/Yearly invoicing"]}
+              />
+            </SimpleGrid>
+
+            {/* FAQ Section */}
+            <VStack spacing={10} align="stretch" py={12}>
+              <Center>
+                <VStack spacing={2}>
+                  <Heading size="xl" fontWeight="900" color="gray.800" letterSpacing="-1px">Questions? We've Got Answers.</Heading>
+                  <Text color="gray.500" fontWeight="700">Find everything you need to know about our subscriptions.</Text>
+                </VStack>
+              </Center>
+
+              <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
+                {faqs.map((faq, idx) => (
+                  <Box
+                    key={idx}
+                    p={8}
+                    bg="white"
+                    borderRadius="2xl"
+                    boxShadow="sm"
+                    borderWidth="1px"
+                    borderColor="gray.100"
+                  >
+                    <HStack spacing={4} mb={4}>
+                      <Icon as={MdHelpOutline} color="orange.400" boxSize={6} />
+                      <Text fontSize="lg" fontWeight="800" color="gray.800">{faq.q}</Text>
+                    </HStack>
+                    <Text fontSize="sm" color="gray.500" fontWeight="600" leading="tall">
+                      {faq.a}
+                    </Text>
+                  </Box>
+                ))}
+              </SimpleGrid>
+            </VStack>
+
+          </VStack>
+        </Container>
+        <Footer />
+      </VStack>
+    </Box>
+  );
+}
+
+export default Plan;
